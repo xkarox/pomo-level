@@ -60,17 +60,26 @@ img {
 
 /* Background-layer sorting */
 #scroll-background {
-  z-index: -4;
+  z-index: -99994;
 }
 
 #scroll-far-trees {
-  z-index: -3;
+  z-index: -99993;
 }
 
 #scroll-mid-trees {
-  z-index: -2;
+  z-index: -99992;
 }
 
 #scroll-close-trees {
-  z-index: -1;
+  z-index: -99991;
+}
+
+#scroll-far-trees div span img {
+  filter: blur(1.5px);
+  -webkit-filter: blur(1.5px);
+}
+#scroll-mid-trees div span img {
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
 }

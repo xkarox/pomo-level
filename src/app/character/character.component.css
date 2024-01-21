@@ -1,0 +1,39 @@
+.char-container {
+  z-index: 999999999999999999999999;
+  position: absolute;
+  bottom: 15%;
+  left: 49%;
+  transform: translateX(-50%);
+}
+
+#char {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+#char.animate-idle {
+  animation: Idle 0.75s steps(5) infinite;
+}
+
+#char.animate-running {
+  animation: Run 0.75s steps(6) infinite;
+}
+
+@keyframes Idle {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: -160px;
+  }
+}
+
+@keyframes Run {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: -192px;
+  }
+}

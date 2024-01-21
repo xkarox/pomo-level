@@ -1,0 +1,76 @@
+.scroll {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.m-scroll {
+  overflow: hidden;
+  height: 100%;
+  white-space: nowrap;
+  margin: 0;
+  font-size: 0;
+  display: flex;
+  justify-content: space-between;
+  width: fit-content;
+}
+
+.animate {
+  animation: scrollText infinite linear;
+}
+
+.animate.close {
+  animation-duration: 10s;
+}
+
+.animate.mid {
+  animation-duration: 20s;
+}
+
+.animate.far {
+  animation-duration: 30s;
+}
+
+span {
+  height: 100%;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+img {
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+@keyframes scrollText {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Background-layer sorting */
+#scroll-background {
+  z-index: -4;
+}
+
+#scroll-far-trees {
+  z-index: -3;
+}
+
+#scroll-mid-trees {
+  z-index: -2;
+}
+
+#scroll-close-trees {
+  z-index: -1;
+}

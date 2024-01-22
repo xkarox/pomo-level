@@ -23,15 +23,15 @@
 }
 
 .animate.close {
-  animation-duration: 10s;
-}
-
-.animate.mid {
   animation-duration: 20s;
 }
 
-.animate.far {
+.animate.mid {
   animation-duration: 30s;
+}
+
+.animate.far {
+  animation-duration: 40s;
 }
 
 span {

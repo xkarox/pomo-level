@@ -8,4 +8,10 @@
 
 .timer {
   font-size: 5rem;
+  display: grid;
+  grid-template-columns: 0fr 0fr 0fr;
+}
+
+.timer p {
+  text-align: center;
 }

@@ -1,5 +1,8 @@
 <div class="ui-container">
   <div class="timer">
-    <p>00:25</p>
+    <p (mouseover)="HoursHandler()" id="hours">{{ HoursString }}</p>
+    <p>:</p>
+    <p (mouseover)="MinutesHandler()" id="minutes">{{ MinutesString }}</p>
+    <button><p>Start</p></button>
   </div>
 </div>

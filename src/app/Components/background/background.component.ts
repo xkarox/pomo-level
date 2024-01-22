@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CharacterComponent } from '../character/character.component';
 
 @Component({
   selector: 'app-background',

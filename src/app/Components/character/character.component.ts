@@ -13,6 +13,7 @@ export class CharacterComponent implements OnInit {
   private charFrameTime = '0.75%';
   private charAnimationIdle = 'Idle';
   private charAnimationRunning = 'Running';
+
   ngOnInit(): void {
     const char = document.getElementById('char');
     if (char) {
@@ -24,6 +25,7 @@ export class CharacterComponent implements OnInit {
     }
   }
 
+  //jump after randoim time or a message or something
   Animate(animation: string) {
     const char = document.getElementById('char');
     if (char) {

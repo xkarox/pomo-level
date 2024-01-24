@@ -1,3 +1,7 @@
 <app-background> </app-background>
-<app-ui></app-ui>
+<app-ui
+  (PressStartEvent)="this.StartGame($event)"
+  (PressResetEvent)="this.ResetGame()"
+  [TimerRunning]="this.GameStarted"
+></app-ui>
 <app-character></app-character>

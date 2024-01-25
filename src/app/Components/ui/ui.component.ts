@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HelperService } from '../../Services/helper.service';
 import { TimerValues } from '../../Types/timer-values';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-ui',
@@ -17,9 +18,18 @@ export class UiComponent implements OnInit {
   @Output() SecondsChangedEvent = new EventEmitter<WheelEvent>();
   @Input() Minutes: number = 25;
   @Input() Seconds: number = 0;
-
+  private ShowContinuePopupEventSub!: Subscription;
+  @Input()
+  ShowContinuePopup!: Observable<void>;
   ngOnInit(): void {
+    this.ShowContinuePopupEventSub = this.ShowContinuePopup.subscribe(() =>
+      this.DisplayContinuePopup()
+    );
     this.AddEventListeners();
+  }
+
+  ngOnDestroy(): void {
+    this.ShowContinuePopupEventSub.unsubscribe();
   }
 
   constructor(private helperService: HelperService) {}
@@ -38,25 +48,6 @@ export class UiComponent implements OnInit {
         this.SecondsChangedEvent.emit(event)
       );
     }
-  }
-
-  public SetSecondsString() {
-    // switch (true) {
-    //   case this.Hours <= 0:
-    //     this.Hours = 0;
-    //     this.HoursString = '00';
-    //     break;
-    //   case this.Hours < 10:
-    //     this.HoursString = '0' + this.Hours;
-    //     break;
-    //   case this.Hours >= 23:
-    //     this.Hours = 23;
-    //     this.HoursString = '23';
-    //     break;
-    //   default:
-    //     this.HoursString = '' + this.Hours;
-    //     break;
-    // }
   }
 
   public GetMinutesString(): string {
@@ -85,11 +76,18 @@ export class UiComponent implements OnInit {
     }
   }
 
-  public Start() {
+  public DisplayContinuePopup() {
+    const continuePopup = document.getElementById('continue-popup-container');
+    if (continuePopup) {
+      continuePopup.style.display = 'flex';
+    }
+  }
+
+  public StartButtonPressed() {
     this.PressStartEvent.emit();
   }
 
-  public Reset() {
+  public ResetButtonPressed() {
     this.PressResetEvent.emit();
   }
 }

@@ -3,11 +3,21 @@
     <p id="minutes">{{ this.GetMinutesString() }}</p>
     <p>:</p>
     <p id="seconds">{{ this.GetSecondsString() }}</p>
-    <button (click)="Start()">
+    <button (click)="StartButtonPressed()">
       <p>Play</p>
     </button>
-    <button (click)="Reset()">
+    <button (click)="ResetButtonPressed()">
       <p>Reset</p>
     </button>
+  </div>
+</div>
+
+<div id="continue-popup-container">
+  <div id="continue-popup" method="dialog">
+    <div id="continue-text-container"><p id="continue-text">Continue?</p></div>
+    <div id="continue-buttons">
+      <button id="continue-confirm">Yes</button>
+      <button id="continue-abort">No</button>
+    </div>
   </div>
 </div>

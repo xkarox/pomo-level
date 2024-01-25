@@ -1,8 +1,8 @@
 <div class="ui-container">
   <div class="timer">
-    <p id="hours">{{ HoursString }}</p>
+    <p id="minutes">{{ this.GetMinutesString() }}</p>
     <p>:</p>
-    <p id="minutes">{{ MinutesString }}</p>
+    <p id="seconds">{{ this.GetSecondsString() }}</p>
     <button (click)="Start()">
       <p>Play</p>
     </button>

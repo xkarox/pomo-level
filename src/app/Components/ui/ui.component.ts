@@ -11,125 +11,85 @@ import { TimerValues } from '../../Types/timer-values';
   providers: [HelperService],
 })
 export class UiComponent implements OnInit {
-  public Hours: number = 0;
-  public Minutes: number = 25;
-  public HoursString: string = '';
-  public MinutesString: string = '';
-
-  @Output() PressStartEvent = new EventEmitter<Date>();
+  @Output() PressStartEvent = new EventEmitter<void>();
   @Output() PressResetEvent = new EventEmitter<void>();
-  @Input() TimerRunning = false;
+  @Output() MinutesChangedEvent = new EventEmitter<WheelEvent>();
+  @Output() SecondsChangedEvent = new EventEmitter<WheelEvent>();
+  @Input() Minutes: number = 25;
+  @Input() Seconds: number = 0;
 
   ngOnInit(): void {
-    this.SetHoursString();
-    this.SetMinutesString();
     this.AddEventListeners();
   }
 
   constructor(private helperService: HelperService) {}
-  private ChangeTime(event: WheelEvent, valueToChange: TimerValues) {
-    if (!this.TimerRunning) {
-      if (valueToChange == TimerValues.Hours) {
-        if (event.deltaY > 0) {
-          this.Hours -= 1;
-        } else if (event.deltaY < 0) {
-          this.Hours += 1;
-        }
-        this.SetHoursString();
-      } else if (valueToChange == TimerValues.Minutes) {
-        if (event.deltaY > 0) {
-          this.Minutes -= 1;
-        } else if (event.deltaY < 0) {
-          this.Minutes += 1;
-        }
-        this.SetMinutesString();
-      }
-    }
-  }
+
   private AddEventListeners() {
-    const hoursElement = document.getElementById('hours');
-    if (hoursElement) {
-      hoursElement.addEventListener('wheel', (event) =>
-        this.ChangeTime(event, TimerValues.Hours)
-      );
-    }
-
     const minutesElement = document.getElementById('minutes');
     if (minutesElement) {
-      minutesElement.addEventListener('wheel', (event) =>
-        this.ChangeTime(event, TimerValues.Minutes)
+      minutesElement.addEventListener('wheel', (event: WheelEvent) =>
+        this.MinutesChangedEvent.emit(event)
+      );
+    }
+
+    const secondsElement = document.getElementById('seconds');
+    if (secondsElement) {
+      secondsElement.addEventListener('wheel', (event: WheelEvent) =>
+        this.SecondsChangedEvent.emit(event)
       );
     }
   }
 
-  private RemoveEventListeners() {
-    const hoursElement = document.getElementById('hours');
-    if (hoursElement) {
-      hoursElement.removeEventListener('wheel', (event) =>
-        this.ChangeTime(event, TimerValues.Hours)
-      );
-    }
-
-    const minutesElement = document.getElementById('minutes');
-    if (minutesElement) {
-      minutesElement.removeEventListener('wheel', (event) =>
-        this.ChangeTime(event, TimerValues.Minutes)
-      );
-    }
+  public SetSecondsString() {
+    // switch (true) {
+    //   case this.Hours <= 0:
+    //     this.Hours = 0;
+    //     this.HoursString = '00';
+    //     break;
+    //   case this.Hours < 10:
+    //     this.HoursString = '0' + this.Hours;
+    //     break;
+    //   case this.Hours >= 23:
+    //     this.Hours = 23;
+    //     this.HoursString = '23';
+    //     break;
+    //   default:
+    //     this.HoursString = '' + this.Hours;
+    //     break;
+    // }
   }
 
-  public SetHoursString() {
-    switch (true) {
-      case this.Hours <= 0:
-        this.Hours = 0;
-        this.HoursString = '00';
-        break;
-      case this.Hours < 10:
-        this.HoursString = '0' + this.Hours;
-        break;
-      case this.Hours >= 23:
-        this.Hours = 23;
-        this.HoursString = '23';
-        break;
-      default:
-        this.HoursString = '' + this.Hours;
-        break;
-    }
-  }
-
-  public SetMinutesString() {
+  public GetMinutesString(): string {
     switch (true) {
       case this.Minutes <= 0:
-        this.Minutes = 0;
-        this.MinutesString = '00';
-        break;
+        return '00';
       case this.Minutes < 10:
-        this.MinutesString = '0' + this.Minutes;
-        break;
+        return '0' + this.Minutes.toString();
       case this.Minutes >= 59:
-        this.Minutes = 59;
-        this.MinutesString = '59';
-        break;
+        return '59';
       default:
-        this.MinutesString = '' + this.Minutes;
-        break;
+        return this.Minutes.toString();
+    }
+  }
+
+  public GetSecondsString(): string {
+    switch (true) {
+      case this.Seconds <= 0:
+        return '00';
+      case this.Seconds < 10:
+        return '0' + this.Seconds.toString();
+      case this.Seconds >= 59:
+        return '59';
+      default:
+        return this.Seconds.toString();
     }
   }
 
   public Start() {
-    const now = Date.now();
-    const cycleEndTime = new Date(
-      now.valueOf() + this.Hours * 3600000 + this.Minutes * 60000
-    );
-    this.RemoveEventListeners();
-    this.PressStartEvent.emit(cycleEndTime);
+    this.PressStartEvent.emit();
   }
 
   public Reset() {
-    this.Hours = 0;
-    this.SetHoursString();
-    this.Minutes = 25;
-    this.SetMinutesString();
     this.PressResetEvent.emit();
   }
 }

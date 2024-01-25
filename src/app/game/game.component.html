@@ -1,7 +1,10 @@
 <app-background> </app-background>
 <app-ui
-  (PressStartEvent)="this.StartGame($event)"
+  (PressStartEvent)="this.StartGame()"
   (PressResetEvent)="this.ResetGame()"
-  [TimerRunning]="this.GameStarted"
+  (MinutesChangedEvent)="this.SetMinutes($event)"
+  (SecondsChangedEvent)="this.SetSeconds($event)"
+  [Minutes]="this.Minutes"
+  [Seconds]="this.Seconds"
 ></app-ui>
 <app-character></app-character>

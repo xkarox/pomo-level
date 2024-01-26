@@ -16,8 +16,10 @@
   <div id="continue-popup" method="dialog">
     <div id="continue-text-container"><p id="continue-text">Continue?</p></div>
     <div id="continue-buttons">
-      <button id="continue-confirm">Yes</button>
-      <button id="continue-abort">No</button>
+      <button id="continue-confirm" (click)="ContinueGameButtonPressed()">
+        Yes
+      </button>
+      <button id="continue-abort" (click)="AbortGameButtonPressed()">No</button>
     </div>
   </div>
 </div>

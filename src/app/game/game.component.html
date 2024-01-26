@@ -4,8 +4,12 @@
   (PressResetEvent)="this.ResetGame()"
   (MinutesChangedEvent)="this.SetMinutes($event)"
   (SecondsChangedEvent)="this.SetSeconds($event)"
+  (ContineGameButtonPressedEvent)="this.ContinueGame()"
+  (AbortGameButtonPressedEvent)="this.AbortGame()"
   [Minutes]="this.Minutes"
   [Seconds]="this.Seconds"
   [ShowContinuePopup]="ShowContinuePopup.asObservable()"
+  [CloseContinuePopup]="CloseContinuePopup.asObservable()"
 ></app-ui>
 <app-character></app-character>
+<!-- this.ContinueGame() -->

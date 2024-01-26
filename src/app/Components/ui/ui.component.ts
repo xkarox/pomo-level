@@ -16,20 +16,30 @@ export class UiComponent implements OnInit {
   @Output() PressResetEvent = new EventEmitter<void>();
   @Output() MinutesChangedEvent = new EventEmitter<WheelEvent>();
   @Output() SecondsChangedEvent = new EventEmitter<WheelEvent>();
+  @Output() ContineGameButtonPressedEvent = new EventEmitter<void>();
+  @Output() AbortGameButtonPressedEvent = new EventEmitter<void>();
   @Input() Minutes: number = 25;
   @Input() Seconds: number = 0;
   private ShowContinuePopupEventSub!: Subscription;
   @Input()
   ShowContinuePopup!: Observable<void>;
+  private CloseContinuePopupEventSub!: Subscription;
+  @Input()
+  CloseContinuePopup!: Observable<void>;
+
   ngOnInit(): void {
     this.ShowContinuePopupEventSub = this.ShowContinuePopup.subscribe(() =>
       this.DisplayContinuePopup()
+    );
+    this.CloseContinuePopupEventSub = this.CloseContinuePopup.subscribe(() =>
+      this.HideContinuePopup()
     );
     this.AddEventListeners();
   }
 
   ngOnDestroy(): void {
     this.ShowContinuePopupEventSub.unsubscribe();
+    this.CloseContinuePopupEventSub.unsubscribe();
   }
 
   constructor(private helperService: HelperService) {}
@@ -81,6 +91,21 @@ export class UiComponent implements OnInit {
     if (continuePopup) {
       continuePopup.style.display = 'flex';
     }
+  }
+
+  public HideContinuePopup() {
+    const continuePopup = document.getElementById('continue-popup-container');
+    if (continuePopup) {
+      continuePopup.style.display = 'none';
+    }
+  }
+
+  public ContinueGameButtonPressed() {
+    this.ContineGameButtonPressedEvent.emit();
+  }
+
+  public AbortGameButtonPressed() {
+    this.AbortGameButtonPressedEvent.emit();
   }
 
   public StartButtonPressed() {

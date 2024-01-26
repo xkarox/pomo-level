@@ -11,32 +11,32 @@ import { Subject } from 'rxjs';
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
-export class GameComponent {
+export class GameComponent implements OnInit {
   public GameStarted = false;
+  public OnBreak = false;
   public Minutes: number = 25;
   public Seconds: number = 0;
   private MinutesCache: number | null = null;
   private SecondsCache: number | null = null;
   public BreakDuration: number | null = null;
   public ShowContinuePopup: Subject<void> = new Subject<void>();
+  public CloseContinuePopup: Subject<void> = new Subject<void>();
 
-  //add a popup which asks the user if he she wants to continue or not
-  //break needs to start from another place
+  ngOnInit(): void {
+    this.CopyTimeToCache();
+  }
+
   //add streaks?????
   private GameTick: Function = () => {
-    this.Seconds -= 1;
-    if (this.Seconds < 0) {
-      this.Seconds = 59;
-      this.Minutes -= 1;
-    }
-    if (!this.CheckTimeFinished()) {
-      setTimeout(this.GameTick, 1000);
-    }
-    this.Minutes = 0;
-    this.Seconds = 0;
+    if (this.GameStarted) {
+      if (!this.OnBreak) {
+        this.RunNormalLogic();
+      }
 
-    // this.StartBreak();
-    this.ShowContinuePopup.next();
+      if (this.OnBreak) {
+        this.RunBreakLogic();
+      }
+    }
   };
 
   public SetMinutes(event: WheelEvent): void {
@@ -73,26 +73,27 @@ export class GameComponent {
       }
     }
   }
-
   public StartGame(): void {
-    this.BreakDuration = this.Minutes / 5;
-    this.GameStarted = true;
-    this.Run();
-  }
-
-  public StartBreak(): void {
-    if (this.GameStarted && this.BreakDuration) {
-      this.Minutes = Math.round(this.BreakDuration);
+    if (!this.GameStarted) {
+      this.GameStarted = true;
+      this.SetBreakDuration();
+      this.CopyTimeToCache();
+      this.Run();
     }
   }
-
-  public ResetGame(): void {
-    // this.Reset();
-    this.GameStarted = false;
+  public StartBreak(): void {
+    if (this.GameStarted) {
+      setTimeout(() => {
+        this.OnBreak = true;
+        this.Minutes = Math.round(this.BreakDuration!);
+        this.Run();
+      }, 1000);
+    }
   }
-
-  //add game logic
-  //https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
+  public ResetGame(): void {
+    this.GameStarted = false;
+    this.Reset();
+  }
   private Run(): void {
     setTimeout(this.GameTick, 1000);
   }
@@ -103,6 +104,75 @@ export class GameComponent {
     return false;
   }
 
-  private Reset(): void {}
-  private Stop(): void {}
+  private CopyTimeToCache(): void {
+    this.MinutesCache = this.Minutes;
+    this.SecondsCache = this.Seconds;
+  }
+
+  private CopyCacheToTime(): void {
+    this.Minutes = this.MinutesCache!;
+    this.Seconds = this.SecondsCache!;
+  }
+
+  private SetBreakDuration(): void {
+    this.BreakDuration = this.Minutes / 5;
+  }
+  public LOL() {
+    console.log('lauf doch endlich du ddreck ');
+  }
+  public ContinueGame() {
+    this.OnBreak = false;
+    this.CopyCacheToTime();
+    this.CloseContinuePopup.next();
+    this.Run();
+  }
+
+  public AbortGame() {
+    this.OnBreak = false;
+    this.GameStarted = false;
+    this.CopyCacheToTime();
+    this.CloseContinuePopup.next();
+  }
+
+  private Reset(): void {
+    this.CopyCacheToTime();
+    this.GameStarted = false;
+  }
+
+  private RunBreakLogic() {
+    this.Seconds -= 1;
+    if (this.Seconds < 0) {
+      this.Seconds = 59;
+      this.Minutes -= 1;
+    }
+    if (this.Minutes < 0) {
+      this.Minutes = 0;
+    }
+    if (this.CheckTimeFinished()) {
+      this.Minutes = 0;
+      this.Seconds = 0;
+
+      this.ShowContinuePopup.next();
+    } else {
+      setTimeout(this.GameTick, 1000);
+    }
+  }
+
+  private RunNormalLogic() {
+    this.Seconds -= 1;
+    if (this.Seconds < 0) {
+      this.Seconds = 59;
+    }
+    if (this.Minutes > 0) {
+      this.Minutes -= 1;
+    }
+    if (this.CheckTimeFinished()) {
+      this.Minutes = 0;
+      this.Seconds = 0;
+
+      this.StartBreak();
+    } else {
+      setTimeout(this.GameTick, 1000);
+    }
+  }
 }

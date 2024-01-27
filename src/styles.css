@@ -2,9 +2,11 @@
 
 * {
   font-family: "Public Pixel", sans-serif;
-  -webkit-text-stroke: 1px white;
+  /* font-family: "Silver", sans-serif; */
+  /* -webkit-text-stroke: 1px white; */
 }
 body {
+  overflow: hidden;
   margin: 0;
   padding: 0;
 }

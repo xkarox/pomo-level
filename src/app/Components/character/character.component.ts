@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-character',
@@ -13,6 +14,12 @@ export class CharacterComponent implements OnInit {
   private charFrameTime = '0.75%';
   private charAnimationIdle = 'Idle';
   private charAnimationRunning = 'Running';
+  private StartRunningAnimationEventSub!: Subscription;
+  @Input()
+  StartRunningAnimationEvent!: Observable<void>;
+  private StartIdleAnimationEventSub!: Subscription;
+  @Input()
+  StartIdleAnimationEvent!: Observable<void>;
 
   ngOnInit(): void {
     const char = document.getElementById('char');
@@ -23,6 +30,14 @@ export class CharacterComponent implements OnInit {
       char.style.scale = '10';
       char.classList.add('animate-idle');
     }
+
+    this.StartRunningAnimationEventSub =
+      this.StartRunningAnimationEvent.subscribe(() =>
+        this.Animate(this.charAnimationRunning)
+      );
+    this.StartIdleAnimationEventSub = this.StartIdleAnimationEvent.subscribe(
+      () => this.Animate(this.charAnimationIdle)
+    );
   }
 
   //jump after randoim time or a message or something
@@ -39,7 +54,20 @@ export class CharacterComponent implements OnInit {
           break;
         case this.charAnimationRunning:
           char.style.background = `url('assets/img/char/adventurer/Adventurer_Running.png')`;
-          char.classList.add('animate-running');
+          char.classList.add('animate-exit-screen');
+          setTimeout(() => {
+            char.classList.remove('animate-exit-screen');
+            char.classList.add('left-screen');
+
+            char.classList.add('animate-enter-screen');
+
+            setTimeout(() => {
+              char.classList.remove('left-screen');
+              char.classList.remove('animate-enter-screen');
+              char.classList.add('animate-running');
+            }, 2000);
+          }, 2000);
+
           break;
         default:
           char.style.background = `url('assets/img/char/adventurer/adventurer_Idle.png')`;

@@ -1,15 +1,21 @@
 .char-container {
-  z-index: 999999999999999999999999;
-  position: absolute;
-  bottom: 15%;
-  left: 49%;
-  transform: translateX(-50%);
+  /* position: absolute;
+  bottom: 30%;
+  left: 49%; */
 }
 
 #char {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
+  z-index: -99993;
+  position: absolute;
+  bottom: 20%;
+  left: 48%;
+}
+
+#char.left-screen {
+  left: -10%;
 }
 
 #char.animate-idle {
@@ -18,6 +24,14 @@
 
 #char.animate-running {
   animation: Run 0.75s steps(6) infinite;
+}
+
+#char.animate-exit-screen {
+  animation: ExitScreen 2s ease-in, Run 0.75s steps(6) infinite;
+}
+
+#char.animate-enter-screen {
+  animation: EnterScreen 2s linear, Run 0.75s steps(6) infinite;
 }
 
 @keyframes Idle {
@@ -35,5 +49,17 @@
   }
   to {
     background-position: -192px;
+  }
+}
+
+@keyframes ExitScreen {
+  100% {
+    left: 110%;
+  }
+}
+
+@keyframes EnterScreen {
+  100% {
+    left: 48%;
   }
 }

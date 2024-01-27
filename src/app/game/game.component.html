@@ -1,4 +1,13 @@
-<app-background> </app-background>
+<app-background
+  [StartRunningAnimationEvent]="StartRunningAnimationEvent.asObservable()"
+  [StartIdleAnimationEvent]="StartIdleAnimationEvent.asObservable()"
+>
+</app-background>
+<app-character
+  id="character"
+  [StartRunningAnimationEvent]="StartRunningAnimationEvent.asObservable()"
+  [StartIdleAnimationEvent]="StartIdleAnimationEvent.asObservable()"
+></app-character>
 <app-ui
   (PressStartEvent)="this.StartGame()"
   (PressResetEvent)="this.ResetGame()"
@@ -11,5 +20,3 @@
   [ShowContinuePopup]="ShowContinuePopup.asObservable()"
   [CloseContinuePopup]="CloseContinuePopup.asObservable()"
 ></app-ui>
-<app-character></app-character>
-<!-- this.ContinueGame() -->

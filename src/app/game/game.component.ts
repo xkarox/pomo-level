@@ -21,6 +21,8 @@ export class GameComponent implements OnInit {
   public BreakDuration: number | null = null;
   public ShowContinuePopup: Subject<void> = new Subject<void>();
   public CloseContinuePopup: Subject<void> = new Subject<void>();
+  public StartRunningAnimationEvent = new EventEmitter<void>();
+  public StartIdleAnimationEvent = new EventEmitter<void>();
 
   ngOnInit(): void {
     this.CopyTimeToCache();
@@ -78,6 +80,7 @@ export class GameComponent implements OnInit {
       this.GameStarted = true;
       this.SetBreakDuration();
       this.CopyTimeToCache();
+      this.StartRunningAnimationEvent.emit();
       this.Run();
     }
   }
@@ -86,12 +89,14 @@ export class GameComponent implements OnInit {
       setTimeout(() => {
         this.OnBreak = true;
         this.Minutes = Math.round(this.BreakDuration!);
+        this.StartIdleAnimationEvent.emit();
         this.Run();
       }, 1000);
     }
   }
   public ResetGame(): void {
     this.GameStarted = false;
+    this.StartIdleAnimationEvent.emit();
     this.Reset();
   }
   private Run(): void {
@@ -117,13 +122,12 @@ export class GameComponent implements OnInit {
   private SetBreakDuration(): void {
     this.BreakDuration = this.Minutes / 5;
   }
-  public LOL() {
-    console.log('lauf doch endlich du ddreck ');
-  }
+
   public ContinueGame() {
     this.OnBreak = false;
     this.CopyCacheToTime();
     this.CloseContinuePopup.next();
+    this.StartRunningAnimationEvent.emit();
     this.Run();
   }
 
@@ -131,6 +135,7 @@ export class GameComponent implements OnInit {
     this.OnBreak = false;
     this.GameStarted = false;
     this.CopyCacheToTime();
+    this.StartIdleAnimationEvent.emit();
     this.CloseContinuePopup.next();
   }
 

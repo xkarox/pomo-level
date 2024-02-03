@@ -167,10 +167,11 @@ export class GameComponent implements OnInit {
     this.Seconds -= 1;
     if (this.Seconds < 0) {
       this.Seconds = 59;
+      if (this.Minutes > 0) {
+        this.Minutes -= 1;
+      }
     }
-    if (this.Minutes > 0) {
-      this.Minutes -= 1;
-    }
+
     if (this.CheckTimeFinished()) {
       this.Minutes = 0;
       this.Seconds = 0;

@@ -34,6 +34,10 @@
   animation: EnterScreen 2s linear, Run 0.75s steps(6) infinite;
 }
 
+#char.demon-woods-char {
+    transform: translateY(-30%);
+}
+
 @keyframes Idle {
   from {
     background-position: 0px;

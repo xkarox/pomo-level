@@ -40,7 +40,7 @@ export class CharacterComponent implements OnInit {
     );
   }
 
-  //jump after randoim time or a message or something
+  //jump after random time or a message or something
   Animate(animation: string) {
     const char = document.getElementById('char');
     if (char) {
@@ -49,8 +49,22 @@ export class CharacterComponent implements OnInit {
 
       switch (animation) {
         case this.charAnimationIdle:
-          char.style.background = `url('assets/img/char/adventurer/adventurer_Idle.png')`;
-          char.classList.add('animate-idle');
+          // char.style.background = `url('assets/img/char/adventurer/adventurer_Idle.png')`;
+          // char.classList.add('animate-idle');
+          char.classList.add('animate-exit-screen');
+          setTimeout(() => {
+            char.classList.remove('animate-exit-screen');
+            char.classList.add('left-screen');
+
+            char.classList.add('animate-enter-screen');
+            char.classList.remove('demon-woods-char');
+            setTimeout(() => {
+              char.classList.remove('left-screen');
+              char.classList.remove('animate-enter-screen');
+              char.classList.add('animate-idle');
+            }, 2000);
+          }, 2000);
+
           break;
         case this.charAnimationRunning:
           char.style.background = `url('assets/img/char/adventurer/Adventurer_Running.png')`;
@@ -60,8 +74,9 @@ export class CharacterComponent implements OnInit {
             char.classList.add('left-screen');
 
             char.classList.add('animate-enter-screen');
-
+            char.classList.add('demon-woods-char');
             setTimeout(() => {
+
               char.classList.remove('left-screen');
               char.classList.remove('animate-enter-screen');
               char.classList.add('animate-running');

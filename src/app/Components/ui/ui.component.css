@@ -8,13 +8,46 @@
   display: grid;
   grid-template-columns: 0fr 0fr 0fr;
   position: absolute;
-  top: 50%;
+  top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.timer p {
-  text-align: center;
+.timer .timerNumber:hover {
+  cursor: ns-resize;
+  scale: 1.1;
+  transition: scale 0.3s ease-in-out;
+}
+
+.timer p{
+  cursor: none;
+}
+
+/*.timer p {*/
+/*  text-align: center;*/
+/*}*/
+
+
+/* Controls */
+.controls {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 4em;
+  margin-right: 4em;
+  scale: 1.5;
+}
+
+.controls button:hover {
+  scale: 1.6;
+  transition: scale 0.3s ease-in-out;
 }
 
 /* Experiencebar */

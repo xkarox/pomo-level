@@ -2,8 +2,7 @@
 
 * {
   font-family: "Public Pixel", sans-serif;
-  /* font-family: "Silver", sans-serif; */
-  /* -webkit-text-stroke: 1px white; */
+  color: #333;
 }
 body {
   overflow: hidden;

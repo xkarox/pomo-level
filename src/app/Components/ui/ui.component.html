@@ -1,8 +1,11 @@
 <div class="ui-container">
   <div class="timer">
-    <p id="minutes">{{ this.GetMinutesString() }}</p>
+    <p id="minutes" class="timerNumber">{{ this.GetMinutesString() }}</p>
     <p>:</p>
-    <p id="seconds">{{ this.GetSecondsString() }}</p>
+    <p id="seconds" class="timerNumber">{{ this.GetSecondsString() }}</p>
+  </div>
+
+  <div class="controls">
     <button (click)="StartButtonPressed()">
       <p>Play</p>
     </button>

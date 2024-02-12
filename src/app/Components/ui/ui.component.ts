@@ -1,12 +1,14 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HelperService } from '../../Services/helper.service';
-import { TimerValues } from '../../Types/timer-values';
 import { Observable, Subscription } from 'rxjs';
+import {ExperiencebarComponent} from "./experiencebar/experiencebar.component";
 
 @Component({
   selector: 'app-ui',
   standalone: true,
-  imports: [],
+  imports: [
+    ExperiencebarComponent
+  ],
   templateUrl: './ui.component.html',
   styleUrl: './ui.component.css',
   providers: [HelperService],
@@ -26,6 +28,9 @@ export class UiComponent implements OnInit {
   private CloseContinuePopupEventSub!: Subscription;
   @Input()
   CloseContinuePopup!: Observable<void>;
+  @Input()
+  UpdateExperienceBarEvent!: Observable<void>;
+
 
   ngOnInit(): void {
     this.ShowContinuePopupEventSub = this.ShowContinuePopup.subscribe(() =>
@@ -42,7 +47,6 @@ export class UiComponent implements OnInit {
     this.CloseContinuePopupEventSub.unsubscribe();
   }
 
-  constructor(private helperService: HelperService) {}
 
   private AddEventListeners() {
     const minutesElement = document.getElementById('minutes');

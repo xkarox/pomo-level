@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { BackgroundComponent } from '../Components/background/background.component';
 import { UiComponent } from '../Components/ui/ui.component';
 import { CharacterComponent } from '../Components/character/character.component';
 import { Subject } from 'rxjs';
+import {LevelService} from "../Services/level.service";
 
 @Component({
   selector: 'app-game',
@@ -23,7 +24,12 @@ export class GameComponent implements OnInit {
   public CloseContinuePopup: Subject<void> = new Subject<void>();
   public StartRunningAnimationEvent = new EventEmitter<void>();
   public StartIdleAnimationEvent = new EventEmitter<void>();
+  public UpdateExperienceBarEvent = new EventEmitter<void>();
 
+
+  constructor(private levelService: LevelService) {
+
+  }
   ngOnInit(): void {
     this.CopyTimeToCache();
   }
@@ -103,10 +109,7 @@ export class GameComponent implements OnInit {
     setTimeout(this.GameTick, 1000);
   }
   private CheckTimeFinished(): boolean {
-    if (this.Minutes === 0 && this.Seconds === 0) {
-      return true;
-    }
-    return false;
+    return this.Minutes === 0 && this.Seconds === 0;
   }
 
   private CopyTimeToCache(): void {
@@ -157,9 +160,12 @@ export class GameComponent implements OnInit {
       this.Minutes = 0;
       this.Seconds = 0;
 
+      this.levelService.AddExperience(Math.round(this.MinutesCache! / 2))
+      this.UpdateExperienceBarEvent.emit();
+
       this.ShowContinuePopup.next();
     } else {
-      setTimeout(this.GameTick, 1000);
+      setTimeout(this.GameTick, 10);
     }
   }
 
@@ -176,9 +182,12 @@ export class GameComponent implements OnInit {
       this.Minutes = 0;
       this.Seconds = 0;
 
+      this.levelService.AddExperience(Math.round(this.MinutesCache!));
+      this.UpdateExperienceBarEvent.emit();
+
       this.StartBreak();
     } else {
-      setTimeout(this.GameTick, 1000);
+      setTimeout(this.GameTick, 10);
     }
   }
 }

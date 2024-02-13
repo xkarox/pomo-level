@@ -39,6 +39,12 @@
   transform: translateY(-30%);
 }
 
+#speechbubble-container {
+  position: absolute;
+  bottom: 35%;
+  left: 45%;
+}
+
 
 
 @keyframes Idle {

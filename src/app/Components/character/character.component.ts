@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import {SpeechbubbleComponent} from "./speechbubble/speechbubble.component";
 
 @Component({
   selector: 'app-character',
   standalone: true,
-  imports: [],
+  imports: [SpeechbubbleComponent],
   templateUrl: './character.component.html',
   styleUrl: './character.component.css',
 })

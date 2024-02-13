@@ -1,20 +1,40 @@
 .bar-frame {
   width: 95vw;
   height: 30px;
-  border: 3px solid #333;
+  border: 3px solid #FFFDD0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
 .bar{
-  height: 90%;
+  height: 80%;
   width: 40%;
   margin: 0.1em;
-  background-color: #333;
+  background-color: #FFFDD0;
+  border: 1px solid #FFFDD0;
   transition: width 1s ease-in-out;
 }
 
-#experience-bar {
+.experience-info {
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 0.5em;
+}
 
+.experience-info p {
+  cursor: none;
+  user-select: none;
+  display: inline;
+  font-size: x-large;
+  scale: 1;
+}
+
+.experience-info p:hover {
+  scale: 1.5;
+  transition: scale 0.3s ease-in-out;
+}
+
+#experience-bar {
+  background: none;
 }

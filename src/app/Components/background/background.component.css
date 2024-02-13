@@ -23,14 +23,18 @@
 }
 
 .animate.close {
+  filter: brightness(75%);
   animation-duration: 30s;
 }
 
 .animate.mid {
+  filter: brightness(85%);
+
   animation-duration: 40s;
 }
 
 .animate.far {
+  filter: brightness(85%);
   animation-duration: 50s;
 }
 
@@ -146,7 +150,7 @@ img {
   height: 100vh;
   z-index: 9999999999999999999999999999;
   background: black;
-  opacity: 0%;
+  opacity: 0;
   transition: 2s ease-in;
 }
 

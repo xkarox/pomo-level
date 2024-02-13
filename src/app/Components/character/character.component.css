@@ -35,12 +35,15 @@
 }
 
 #char.demon-woods-char {
-    transform: translateY(-30%);
+  filter: brightness(50%);
+  transform: translateY(-30%);
 }
+
+
 
 @keyframes Idle {
   from {
-    background-position: 0px;
+    background-position: 0;
   }
   to {
     background-position: -160px;
@@ -49,7 +52,7 @@
 
 @keyframes Run {
   from {
-    background-position: 0px;
+    background-position: 0;
   }
   to {
     background-position: -192px;

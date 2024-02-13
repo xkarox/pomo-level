@@ -9,9 +9,6 @@ import { Observable, Subscription } from 'rxjs';
   styleUrl: './character.component.css',
 })
 export class CharacterComponent implements OnInit {
-  private charIdleSteps = 5;
-  private charRunningSteps = 6;
-  private charFrameTime = '0.75%';
   private charAnimationIdle = 'Idle';
   private charAnimationRunning = 'Running';
   private StartRunningAnimationEventSub!: Subscription;
@@ -24,7 +21,7 @@ export class CharacterComponent implements OnInit {
   ngOnInit(): void {
     const char = document.getElementById('char');
     if (char) {
-      char.style.background = `url('assets/img/char/adventurer/adventurer_Idle.png')`;
+      char.style.background = `url('assets/img/char/adventurer/Adventurer_Idle.png')`;
       char.style.height = '32px';
       char.style.width = '32px';
       char.style.scale = '10';
@@ -49,8 +46,8 @@ export class CharacterComponent implements OnInit {
 
       switch (animation) {
         case this.charAnimationIdle:
-          // char.style.background = `url('assets/img/char/adventurer/adventurer_Idle.png')`;
-          // char.classList.add('animate-idle');
+          char.style.background = `url('assets/img/char/adventurer/Adventurer_Idle.png')`;
+          char.classList.add('animate-idle');
           char.classList.add('animate-exit-screen');
           setTimeout(() => {
             char.classList.remove('animate-exit-screen');

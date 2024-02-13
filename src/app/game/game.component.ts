@@ -26,6 +26,8 @@ export class GameComponent implements OnInit {
   public StartIdleAnimationEvent = new EventEmitter<void>();
   public UpdateExperienceBarEvent = new EventEmitter<void>();
 
+  private GAME_TICK_INTERVAL: number = 1000;
+
 
   constructor(private levelService: LevelService) {
 
@@ -165,7 +167,7 @@ export class GameComponent implements OnInit {
 
       this.ShowContinuePopup.next();
     } else {
-      setTimeout(this.GameTick, 10);
+      setTimeout(this.GameTick, this.GAME_TICK_INTERVAL);
     }
   }
 
@@ -187,7 +189,7 @@ export class GameComponent implements OnInit {
 
       this.StartBreak();
     } else {
-      setTimeout(this.GameTick, 10);
+      setTimeout(this.GameTick, this.GAME_TICK_INTERVAL);
     }
   }
 }

@@ -18,7 +18,8 @@ export class SpeechbubbleComponent implements OnInit{
 
   private async Start() {
     const random = Math.random();
-    if (random < 0.11) {
+    // TODO: Change to 0.11
+    if (random < 1) {
       await this.DisplayQuote()
     }
 

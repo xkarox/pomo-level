@@ -1,0 +1,12 @@
+form{
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div {
+    border: 1px solid greenyellow;
+    width: max-content;
+    margin-top: 2em;
+}

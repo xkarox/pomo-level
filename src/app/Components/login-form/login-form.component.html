@@ -1,7 +1,15 @@
-<form (submit)="login(username.value, password.value)">
-  <label for="username">Username</label>
-  <input #username type="text" placeholder="Username" id="username">
-  <label for="password">Password</label>
-  <input #password type="password" placeholder="Password" id="password">
-  <button type="submit">Login</button>
+<form (submit)="login(username.value, password.value)" class="login-form">
+  <div class="username-field">
+    <!-- <label for="username">Username</label> -->
+    <input #username type="text" placeholder="Username" id="username">
+  </div>
+  
+  <div class="password-field">
+    <!-- <label for="password">Password</label> -->
+    <input #password type="password" placeholder="Password" id="password">
+  </div>
+
+  <div class="login-button">
+    <button type="submit">Login</button>
+  </div>
 </form>

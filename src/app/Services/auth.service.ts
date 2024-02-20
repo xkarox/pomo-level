@@ -10,25 +10,25 @@ export class AuthService {
   constructor() { }
 
   async login(login: Login){
-
-    //TODO: check how to set cookie HINT: cors
     const response = await fetch(this.apiUrl + 'login', {
       mode: 'no-cors',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(login)
+      credentials:'include',
+      body: JSON.stringify(login),
     })
 
     //check if cookie is set
-    const response2 = await fetch(this.apiUrl + 'changeLevel', {
-      mode: 'no-cors',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({"level" : 69, "exp" : 420})
-    })
+    // const response2 = await fetch(this.apiUrl + 'changeLevel', {
+    //   mode: 'no-cors',
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   credentials:'include',
+    //   body: JSON.stringify({"level" : 69, "exp" : 420})
+    // })
   }
 }

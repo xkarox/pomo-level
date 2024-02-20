@@ -1,4 +1,9 @@
 <div class="ui-container">
+  <div class="open-login-container">
+    <button (click)="OpenLoginPopup()">Login</button>
+  </div>
+
+
   <div class="timer">
     <p id="minutes" class="timerNumber">{{ this.GetMinutesString() }}</p>
     <p>:</p>
@@ -29,6 +34,10 @@
       <button id="continue-abort" (click)="AbortGameButtonPressed()">No</button>
     </div>
   </div>
+</div>
+
+<div id="login-popup-container" >
+  <app-login-form (SuccessfullyLoggedIn)="CloseLoginPopup()" ></app-login-form>
 </div>
 
 

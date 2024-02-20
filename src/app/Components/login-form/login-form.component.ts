@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import {Login} from "../../login";
+import {Component, EventEmitter, Output} from '@angular/core';
+import { Login } from "../../login";
 import { FormsModule } from '@angular/forms';
-import {AuthService} from "../../Services/auth.service";
-import {HttpClientModule} from "@angular/common/http";
+import { AuthService } from "../../Services/auth.service";
+import { HttpClientModule } from "@angular/common/http";
 
 @Component({
   selector: 'app-login-form',
@@ -12,8 +12,8 @@ import {HttpClientModule} from "@angular/common/http";
   styleUrl: './login-form.component.css'
 })
 export class LoginFormComponent {
-
-  submitted: boolean = false;
+  @Output()
+  public SuccessfullyLoggedIn = new EventEmitter<void>
 
   constructor(private authService: AuthService) {
   }
@@ -25,8 +25,7 @@ export class LoginFormComponent {
       password: password
     }
     this.authService.login(loginModel).then(() => {
-      this.submitted = true;
-      console.log("login successful")
+      this.SuccessfullyLoggedIn.emit();
     });
   }
 

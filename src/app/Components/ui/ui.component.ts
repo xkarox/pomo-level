@@ -2,12 +2,14 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HelperService } from '../../Services/helper.service';
 import { Observable, Subscription } from 'rxjs';
 import {ExperiencebarComponent} from "./experiencebar/experiencebar.component";
+import {LoginFormComponent} from "../login-form/login-form.component";
 
 @Component({
   selector: 'app-ui',
   standalone: true,
   imports: [
-    ExperiencebarComponent
+    ExperiencebarComponent,
+    LoginFormComponent
   ],
   templateUrl: './ui.component.html',
   styleUrl: './ui.component.css',
@@ -87,6 +89,20 @@ export class UiComponent implements OnInit {
         return '59';
       default:
         return this.Seconds.toString();
+    }
+  }
+
+  public OpenLoginPopup() {
+    const loginPopup = document.getElementById('login-popup-container');
+    if (loginPopup) {
+      loginPopup.style.display = 'flex';
+    }
+  }
+
+  public CloseLoginPopup() {
+    const loginPopup = document.getElementById('login-popup-container');
+    if (loginPopup) {
+      loginPopup.style.display = 'none';
     }
   }
 

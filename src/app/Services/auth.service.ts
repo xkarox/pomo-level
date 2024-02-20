@@ -18,7 +18,10 @@ export class AuthService {
       },
       credentials:'include',
       body: JSON.stringify(login),
-    })
+    }).then(() => {
+      console.log("login successful")
+
+    });
 
     //check if cookie is set
     // const response2 = await fetch(this.apiUrl + 'changeLevel', {

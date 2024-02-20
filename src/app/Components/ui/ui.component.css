@@ -100,7 +100,23 @@
   align-items: center;
 }
 
+/* Login Popup */
+#login-popup-container{
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99999999999;
+}
 
+.open-login-container{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99999999999;
+}
 
 
 

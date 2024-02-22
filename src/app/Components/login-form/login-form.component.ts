@@ -14,19 +14,68 @@ import { HttpClientModule } from "@angular/common/http";
 export class LoginFormComponent {
   @Output()
   public SuccessfullyLoggedIn = new EventEmitter<void>
+  @Output()
+  public CloseLoginForm = new EventEmitter<void>
 
   constructor(private authService: AuthService) {
   }
 
 
-  login(username : string, password : string) {
+  Login(username : string, password : string) {
+    if (this.CheckIfLoginIsEmpty(username, password)) {
+      return;
+    }
     const loginModel: Login = {
       username: username,
       password: password
     }
-    this.authService.login(loginModel).then(() => {
+    this.authService.Login(loginModel).then(() => {
       this.SuccessfullyLoggedIn.emit();
+    }).catch( () => {
+      this.SetUsernameEmptyStyle();
+      this.SetPasswordEmptyStyle();
     });
   }
+
+  Close() {
+    setTimeout(() => {
+      this.RemoveEmptyStyle();
+    }, 100)
+    this.CloseLoginForm.emit();
+  }
+
+  CheckIfLoginIsEmpty(username : string, password : string) {
+    let loginEmpty: boolean = false;
+
+    if(username == "") {
+      this.SetUsernameEmptyStyle();
+      loginEmpty = true;
+    }
+    if(password == "") {
+      this.SetPasswordEmptyStyle();
+      loginEmpty = true;
+    }
+
+    return loginEmpty;
+  }
+
+  SetUsernameEmptyStyle(){
+    const element = document.getElementsByClassName("username-field");
+    element[0].classList.add("emptyError");
+  }
+
+  SetPasswordEmptyStyle(){
+    const element = document.getElementsByClassName("password-field");
+    element[0].classList.add("emptyError");
+  }
+
+  RemoveEmptyStyle(){
+    const element = document.getElementsByClassName("username-field");
+    element[0].classList.remove("emptyError");
+    const element2 = document.getElementsByClassName("password-field");
+    element2[0].classList.remove("emptyError");
+  }
+
+
 
 }

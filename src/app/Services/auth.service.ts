@@ -9,7 +9,7 @@ export class AuthService {
 
   constructor() { }
 
-  async login(login: Login){
+  async Login(login: Login){
     const response = await fetch(this.apiUrl + 'login', {
       mode: 'no-cors',
       method: 'POST',
@@ -23,15 +23,34 @@ export class AuthService {
 
     });
 
-    //check if cookie is set
-    // const response2 = await fetch(this.apiUrl + 'changeLevel', {
-    //   mode: 'no-cors',
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   credentials:'include',
-    //   body: JSON.stringify({"level" : 69, "exp" : 420})
-    // })
+  }
+
+  async Register(login: Login){
+    const response = await fetch(this.apiUrl + 'register', {
+      mode: 'no-cors',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials:'include',
+      body: JSON.stringify(login),
+    }).then(() => {
+      console.log("registration successful")
+    });
+  }
+
+  async CheckToken() : Promise<boolean>{
+    let returnValue = false;
+    const response = fetch(this.apiUrl + 'refreshToken', {
+      mode: 'no-cors',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials:'include',
+    }).then((response) => {
+      returnValue = response.status === 200;
+    })
+    return returnValue
   }
 }

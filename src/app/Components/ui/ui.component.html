@@ -1,6 +1,13 @@
 <div class="ui-container">
-  <div class="open-login-container">
-    <button (click)="OpenLoginPopup()">Login</button>
+
+
+  <div class="open-login-container" *ngIf="!Authenticated">
+    <div>
+      <button (click)="OpenLoginPopup()">Login</button>
+    </div>
+    <div>
+      <button (click)="OpenRegisterPopup()">Register</button>
+    </div>
   </div>
 
 
@@ -37,7 +44,13 @@
 </div>
 
 <div id="login-popup-container" >
-  <app-login-form (SuccessfullyLoggedIn)="CloseLoginPopup()" ></app-login-form>
+  <app-login-form (SuccessfullyLoggedIn)="HandleSuccessfullLogin()"
+                  (CloseLoginForm)="CloseLoginPopup()"></app-login-form>
+</div>
+
+<div id="register-popup-container" >
+  <app-register-form (SuccessfullyRegistered)="HandleSuccessfullRegister()"
+                     (CloseRegisterForm)="CloseRegisterPopup()"></app-register-form>
 </div>
 
 

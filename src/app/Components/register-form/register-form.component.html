@@ -1,0 +1,36 @@
+<form (submit)="Register(username.value, password.value)" class="register-form">
+  <div class="close-button-container">
+    <button class="register-form-close-button" (click)="Close()">
+      X
+    </button>
+  </div>
+  <div class="username-field">
+    <input #username
+           type="text"
+           placeholder="Username"
+           id="username"
+           (change)="CheckIfUsernameExists(username.value)"
+           required>
+  </div>
+
+  <div class="password-field">
+    <input #password
+           type="password"
+           placeholder="Password"
+           id="password"
+           required>
+  </div>
+
+  <div class="password-field">
+    <input #rePassword type="password"
+           placeholder="Retype password"
+           id="rePassword"
+           (change)="CheckIfPasswordsMatch(password.value, rePassword.value)"
+           required>
+  </div>
+
+  <div class="register-button">
+    <button type="submit">Register</button>
+  </div>
+</form>
+

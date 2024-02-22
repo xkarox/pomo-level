@@ -1,12 +1,17 @@
-<form (submit)="login(username.value, password.value)" class="login-form">
+<form (submit)="Login(username.value, password.value)" class="login-form">
+  <div class="close-button-container">
+    <button class="login-form-close-button" (click)="Close()">
+      X
+    </button>
+  </div>
   <div class="username-field">
     <!-- <label for="username">Username</label> -->
-    <input #username type="text" placeholder="Username" id="username">
+    <input #username type="text" placeholder="Username" id="username" required>
   </div>
-  
+
   <div class="password-field">
     <!-- <label for="password">Password</label> -->
-    <input #password type="password" placeholder="Password" id="password">
+    <input #password type="password" placeholder="Password" id="password" required>
   </div>
 
   <div class="login-button">

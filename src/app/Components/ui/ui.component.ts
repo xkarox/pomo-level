@@ -3,13 +3,18 @@ import { HelperService } from '../../Services/helper.service';
 import { Observable, Subscription } from 'rxjs';
 import {ExperiencebarComponent} from "./experiencebar/experiencebar.component";
 import {LoginFormComponent} from "../login-form/login-form.component";
+import {RegisterFormComponent} from "../register-form/register-form.component";
+import {AuthService} from "../../Services/auth.service";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-ui',
   standalone: true,
   imports: [
     ExperiencebarComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    RegisterFormComponent,
+    NgIf
   ],
   templateUrl: './ui.component.html',
   styleUrl: './ui.component.css',
@@ -33,8 +38,12 @@ export class UiComponent implements OnInit {
   @Input()
   UpdateExperienceBarEvent!: Observable<void>;
 
+  Authenticated: boolean = false
 
-  ngOnInit(): void {
+  constructor(private authService: AuthService) {
+  }
+
+  async ngOnInit(): Promise<void> {
     this.ShowContinuePopupEventSub = this.ShowContinuePopup.subscribe(() =>
       this.DisplayContinuePopup()
     );
@@ -42,6 +51,12 @@ export class UiComponent implements OnInit {
       this.HideContinuePopup()
     );
     this.AddEventListeners();
+
+    await this.authService.CheckToken().then( (returned) => {
+      this.Authenticated = returned
+      console.log(returned)
+    })
+
   }
 
   ngOnDestroy(): void {
@@ -89,6 +104,28 @@ export class UiComponent implements OnInit {
         return '59';
       default:
         return this.Seconds.toString();
+    }
+  }
+
+  HandleSuccessfullLogin(){
+    this.CloseLoginPopup();
+  }
+
+  HandleSuccessfullRegister(){
+    this.CloseRegisterPopup();
+  }
+
+  OpenRegisterPopup(){
+    const registerPopup = document.getElementById('register-popup-container');
+    if (registerPopup) {
+      registerPopup.style.display = 'flex';
+    }
+  }
+
+  CloseRegisterPopup(){
+    const registerPopup = document.getElementById('register-popup-container');
+    if (registerPopup) {
+      registerPopup.style.display = 'none';
     }
   }
 

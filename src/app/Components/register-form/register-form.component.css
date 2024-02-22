@@ -1,24 +1,9 @@
-/*form{*/
-/*    display: flex; */
-/*    flex-direction: column;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*}*/
-
-/*div {*/
-/*    border: 1px solid greenyellow;*/
-/*    width: max-content;*/
-/*    margin-top: 2em;*/
-/*}*/
-
-
-
 * {
   color: #333;
   -webkit-text-stroke-width: 0;
   -webkit-text-stroke-color: black;
 }
-.login-form {
+.register-form {
   display: flex;
   /*justify-content: flex-end;*/
   flex-direction: column;
@@ -53,7 +38,7 @@ input[type="password"]::placeholder {
   color: #999;
 }
 
-.login-button button {
+.register-button button {
   padding: 10px 20px;
   background-color: #333;
   color: #fff;
@@ -63,12 +48,12 @@ input[type="password"]::placeholder {
   cursor: pointer;
 }
 
-.login-button button:hover {
+.register-button button:hover {
   background-color: #555;
 }
 
 
-.login-form-close-button{
+.register-form-close-button{
   background-color: #ffffff;
   color: #000000;
   border: none;
@@ -79,7 +64,7 @@ input[type="password"]::placeholder {
   transition: background-color 0.3s ease;
 }
 
-.login-form-close-button:hover {
+.register-form-close-button:hover {
   background-color: #dddddd;
 }
 

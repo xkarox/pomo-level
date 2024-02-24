@@ -4,6 +4,8 @@ import { UiComponent } from '../Components/ui/ui.component';
 import { CharacterComponent } from '../Components/character/character.component';
 import { Subject } from 'rxjs';
 import {LevelService} from "../Services/level.service";
+import {USERNAME} from "../Types/global";
+import {AuthService} from "../Services/auth.service";
 
 @Component({
   selector: 'app-game',
@@ -27,13 +29,19 @@ export class GameComponent implements OnInit {
   public UpdateExperienceBarEvent = new EventEmitter<void>();
 
   private GAME_TICK_INTERVAL: number = 1000;
+  private Authenticated: boolean = false;
 
 
-  constructor(private levelService: LevelService) {
+  constructor(private levelService: LevelService, private authService: AuthService) {
 
   }
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.CopyTimeToCache();
+
+    await this.authService.CheckToken().then((returned) => {
+      this.Authenticated = returned;
+      console.log(this.Authenticated);
+    })
   }
 
   //add streaks?????
@@ -162,7 +170,7 @@ export class GameComponent implements OnInit {
       this.Minutes = 0;
       this.Seconds = 0;
 
-      this.levelService.AddExperience(Math.round(this.MinutesCache! / 2))
+      this.levelService.AddExperience(Math.round(this.MinutesCache! / 2), this.Authenticated);
       this.UpdateExperienceBarEvent.emit();
 
       this.ShowContinuePopup.next();
@@ -184,12 +192,16 @@ export class GameComponent implements OnInit {
       this.Minutes = 0;
       this.Seconds = 0;
 
-      this.levelService.AddExperience(Math.round(this.MinutesCache!));
+      this.levelService.AddExperience(Math.round(this.MinutesCache!), this.Authenticated);
       this.UpdateExperienceBarEvent.emit();
 
       this.StartBreak();
     } else {
       setTimeout(this.GameTick, this.GAME_TICK_INTERVAL);
     }
+  }
+
+  SetAuthenticationStatus(authenticated: boolean) {
+    this.Authenticated = authenticated;
   }
 }

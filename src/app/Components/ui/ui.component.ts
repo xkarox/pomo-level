@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef} from '@angular/core';
 import { HelperService } from '../../Services/helper.service';
 import { Observable, Subscription } from 'rxjs';
 import {ExperiencebarComponent} from "./experiencebar/experiencebar.component";
@@ -6,6 +6,7 @@ import {LoginFormComponent} from "../login-form/login-form.component";
 import {RegisterFormComponent} from "../register-form/register-form.component";
 import {AuthService} from "../../Services/auth.service";
 import {NgIf} from "@angular/common";
+import {USERNAME} from "../../Types/global";
 
 @Component({
   selector: 'app-ui',
@@ -27,6 +28,7 @@ export class UiComponent implements OnInit {
   @Output() SecondsChangedEvent = new EventEmitter<WheelEvent>();
   @Output() ContineGameButtonPressedEvent = new EventEmitter<void>();
   @Output() AbortGameButtonPressedEvent = new EventEmitter<void>();
+  @Output() AuthenticatedEvent = new EventEmitter<boolean>();
   @Input() Minutes: number = 25;
   @Input() Seconds: number = 0;
   private ShowContinuePopupEventSub!: Subscription;
@@ -39,6 +41,7 @@ export class UiComponent implements OnInit {
   UpdateExperienceBarEvent!: Observable<void>;
 
   Authenticated: boolean = false
+  Username: string = USERNAME
 
   constructor(private authService: AuthService) {
   }
@@ -53,10 +56,10 @@ export class UiComponent implements OnInit {
     this.AddEventListeners();
 
     await this.authService.CheckToken().then( (returned) => {
-      this.Authenticated = returned
-      console.log(returned)
+      // this.Authenticated = returned;
+      this.UpdateAuthenticatedStatus(returned);
+      this.Username = USERNAME
     })
-
   }
 
   ngOnDestroy(): void {
@@ -109,10 +112,14 @@ export class UiComponent implements OnInit {
 
   HandleSuccessfullLogin(){
     this.CloseLoginPopup();
+    this.UpdateAuthenticatedStatus(true);
+    this.Username = USERNAME
   }
 
   HandleSuccessfullRegister(){
     this.CloseRegisterPopup();
+    this.UpdateAuthenticatedStatus(true);
+    this.Username = USERNAME
   }
 
   OpenRegisterPopup(){
@@ -171,5 +178,15 @@ export class UiComponent implements OnInit {
 
   public ResetButtonPressed() {
     this.PressResetEvent.emit();
+  }
+
+  Logout() {
+    this.authService.Logout();
+    this.UpdateAuthenticatedStatus(false);
+  }
+
+  UpdateAuthenticatedStatus(status: boolean) {
+    this.Authenticated = status
+    this.AuthenticatedEvent.emit(this.Authenticated)
   }
 }

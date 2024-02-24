@@ -24,7 +24,6 @@
 }
 
 .experience-info p {
-  cursor: none;
   user-select: none;
   display: inline;
   font-size: x-large;

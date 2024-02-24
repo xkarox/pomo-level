@@ -33,8 +33,9 @@ export class ExperiencebarComponent implements OnInit, AfterViewInit{
   }
 
   private UpdateExperienceBar() {
-    this.level = parseInt(this.levelService.GetLevel());
-    this.experience = parseInt(this.levelService.GetCurrentExperience());
+    //todo remove authenticated = true
+    this.level = parseInt(this.levelService.GetLevel(true));
+    this.experience = parseInt(this.levelService.GetCurrentExperience(true));
     this.expNeeded = this.levelService.GetExperienceNeeded(this.level);
 
     this.ChangeExperienceBarWidth()

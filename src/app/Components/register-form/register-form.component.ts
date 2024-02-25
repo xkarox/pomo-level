@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "../../Services/auth.service";
 
@@ -11,11 +11,16 @@ import {AuthService} from "../../Services/auth.service";
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css'
 })
-export class RegisterFormComponent {
+export class RegisterFormComponent implements OnInit {
   @Output()
   public SuccessfullyRegistered = new EventEmitter<void>
   @Output()
   public CloseRegisterForm = new EventEmitter<void>
+
+  ngOnInit() {
+    const element = document.getElementById('register-form-button');
+    element?.focus();
+  }
 
   constructor(private authService: AuthService) {
   }
@@ -32,6 +37,8 @@ export class RegisterFormComponent {
   Register(username : string, password : string) {
     let loginEmpty: boolean = this.CheckIfRegistrationIsEmpty(username, password);
     if(loginEmpty) {
+      this.SetUsernameEmptyStyle();
+      this.SetPasswordEmptyStyle();
       return;
     }
 

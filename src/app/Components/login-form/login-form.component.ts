@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, EventEmitter, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { Login } from "../../login";
 import { FormsModule } from '@angular/forms';
 import { AuthService } from "../../Services/auth.service";
@@ -11,12 +11,17 @@ import { HttpClientModule } from "@angular/common/http";
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements OnInit {
   @Output()
   public SuccessfullyLoggedIn = new EventEmitter<void>
   @Output()
   public CloseLoginForm = new EventEmitter<void>
 
+
+  ngOnInit() {
+    const element = document.getElementById('login-form-button');
+    element?.focus();
+  }
   constructor(private authService: AuthService) {
   }
 
